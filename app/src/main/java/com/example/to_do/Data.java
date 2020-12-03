@@ -4,6 +4,8 @@ package com.example.to_do;
 public class Data {
     private String Title;
     private String Desc;
+    private String Selectdate;
+    private String Selecttime;
 
 
     public Data() {
@@ -25,4 +27,21 @@ public class Data {
         Desc = desc;
 
     }
+
+    public String getSelectdate() {
+        return Selectdate;
+    }
+
+    public void setSelectdate(String selectdate) {
+        Selectdate = selectdate;
+    }
+
+    public String getSelecttime() {
+        return Selecttime;
+    }
+
+    public void setSelecttime(String selecttime) {
+        Selecttime = selecttime;
+    }
+
 }

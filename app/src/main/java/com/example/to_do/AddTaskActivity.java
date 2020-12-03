@@ -1,31 +1,54 @@
 package com.example.to_do;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.Locale;
+public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class AddTaskActivity extends AppCompatActivity {
+    TextView select_date, select_time;
+    Button date, time;
+    private int mYear, mMonth, mday, mHour, mMinute;
 
-    private EditText title, desc;
+    private EditText title;
+    private EditText desc;
     private static final int ADD_DATA = 1;
     DatabaseReference databaseReference;
     Data data;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        date = (Button) findViewById(R.id.date);
+        time = (Button) findViewById(R.id.time);
+        select_date = (TextView) findViewById(R.id.selectdate);
+        select_time = (TextView) findViewById(R.id.selecttime);
+
+        date.setOnClickListener(this);
+        time.setOnClickListener(this);
+
 
         title = (EditText) findViewById(R.id.title);
         desc = (EditText) findViewById(R.id.desc);
@@ -33,14 +56,20 @@ public class AddTaskActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Data");
 
     }
+
     public void Create(View view) {
         Intent create = new Intent(AddTaskActivity.this, MainActivity.class);
         startActivity(create);
         data.setTitle(title.getText().toString());
         data.setDesc(desc.getText().toString());
+        data.setSelectdate(select_date.getText().toString());
+        data.setSelecttime(select_time.getText().toString());
+
         databaseReference.push().setValue(data);
         Toast.makeText(getApplicationContext(), "Task created", Toast.LENGTH_SHORT).show();
     }
+
+
     public void Speak(View view) {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -69,6 +98,38 @@ public class AddTaskActivity extends AppCompatActivity {
                     }
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == date) {
+            final Calendar calendar = Calendar.getInstance();
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mday = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    select_date.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                }
+            }, mYear, mMonth, mday);
+            datePickerDialog.show();
+        }
+
+        if (v == time) {
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int hourOfday, int minute) {
+                    select_time.setText(hourOfday + ":" + minute);
+                }
+            }, mHour, mMinute, false);
+            timePickerDialog.show();
         }
     }
 }

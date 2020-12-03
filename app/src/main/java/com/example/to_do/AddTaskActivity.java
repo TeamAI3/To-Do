@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity {
 
-    private EditText title;
+    private EditText title, desc;
     private static final int ADD_DATA = 1;
     DatabaseReference databaseReference;
     Data data;
@@ -28,6 +28,7 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
 
         title = (EditText) findViewById(R.id.title);
+        desc = (EditText) findViewById(R.id.desc);
         data = new Data();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Data");
 
@@ -36,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
         Intent create = new Intent(AddTaskActivity.this, MainActivity.class);
         startActivity(create);
         data.setTitle(title.getText().toString());
-
+        data.setDesc(desc.getText().toString());
         databaseReference.push().setValue(data);
         Toast.makeText(getApplicationContext(), "Task created", Toast.LENGTH_SHORT).show();
     }
@@ -64,7 +65,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     if (title.getText() != null && title.getText().toString().isEmpty()) {
                         title.setText(result.get(0));
                     } else {
-
+                        desc.setText(result.get(0));
                     }
                 }
                 break;

@@ -17,6 +17,20 @@
         android:hint="Title"
         android:textSize="26sp"
         android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/desc"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="141dp"
+        android:hint="Description "
+        android:textSize="26sp"
+        android:textStyle="normal" />
+
     <Button
         android:layout_width="316dp"
         android:layout_height="wrap_content"

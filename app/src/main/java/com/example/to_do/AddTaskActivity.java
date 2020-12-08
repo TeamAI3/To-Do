@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,8 +36,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     private static final int ADD_DATA = 1;
     DatabaseReference databaseReference;
     Data data;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,9 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         title = (EditText) findViewById(R.id.title);
         desc = (EditText) findViewById(R.id.desc);
         data = new Data();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Data");
+        final String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Data").child(userUid);
+
 
     }
 
@@ -65,7 +67,9 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         data.setSelectdate(select_date.getText().toString());
         data.setSelecttime(select_time.getText().toString());
 
+
         databaseReference.push().setValue(data);
+
         Toast.makeText(getApplicationContext(), "Task created", Toast.LENGTH_SHORT).show();
     }
 
@@ -133,3 +137,4 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 }
+

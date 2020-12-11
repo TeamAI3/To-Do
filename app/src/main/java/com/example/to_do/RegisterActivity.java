@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button RegButton;
     private TextView RegPageQuestion;
     private FirebaseAuth mAuth;
+    private TextToSpeech tts;
 
     private ProgressDialog loader;
 
@@ -35,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_register);
+        initializeTextToSpeech();
 
         mAuth = FirebaseAuth.getInstance();
         loader = new ProgressDialog(this);
@@ -47,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegPageQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -55,30 +59,32 @@ public class RegisterActivity extends AppCompatActivity {
         RegButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email =RegEmail.getText().toString().trim();
+                String email = RegEmail.getText().toString().trim();
                 String password = RegPassword.getText().toString().trim();
 
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     RegEmail.setError("Email is Required");
+                    assistant("Please enter your Email address");
                     return;
                 }
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     RegPassword.setError("Password Required");
+                    assistant("Please enter your password");
                     return;
-                }else {
+                } else {
                     loader.setMessage("Registration in progress");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
-                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Intent intent =new Intent(RegisterActivity.this, LoginActivity.class);
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                                 loader.dismiss();
-                            }else {
+                            } else {
                                 String error = task.getException().toString();
                                 Toast.makeText(RegisterActivity.this, "Registration Failed" + error, Toast.LENGTH_SHORT).show();
                                 loader.dismiss();
@@ -87,10 +93,30 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-
             }
-
         });
     }
+                private void initializeTextToSpeech () {
+                    tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (tts.getEngines().size() == 0) {
+                                Toast.makeText(RegisterActivity.this, "Engine is not available", Toast.LENGTH_SHORT).show();
+                            } else {
+                                assistant(" Please Register here");
+                            }
+                        }
+                    });
+                }
+                private void assistant (String msg){
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
+                    } else {
+                        tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+
+
 }
+

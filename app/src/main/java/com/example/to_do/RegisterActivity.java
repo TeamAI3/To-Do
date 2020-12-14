@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                             } else {
                                 String error = task.getException().toString();
                                 Toast.makeText(RegisterActivity.this, "Registration Failed" + error, Toast.LENGTH_SHORT).show();
+                                assistant("Please try again");
                                 loader.dismiss();
                             }
 
@@ -103,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (tts.getEngines().size() == 0) {
                                 Toast.makeText(RegisterActivity.this, "Engine is not available", Toast.LENGTH_SHORT).show();
                             } else {
-                                assistant(" Please Register here");
+                                assistant(" Please Register with Email address and Password");
                             }
                         }
                     });

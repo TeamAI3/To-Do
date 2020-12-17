@@ -17,8 +17,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        String text  = bundle.getString("event");
-       // String desc = bundle.getString("desc");
+        String text = bundle.getString("event");
         String date = bundle.getString("date") + " " + bundle.getString("time");
 
         //Click on Notification
@@ -26,7 +25,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
         Intent intent1 = new Intent(context, MainActivity.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent1.putExtra("message", text);
-        //intent1.putExtra("message", desc);
+
         //Notification Builder
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent1, PendingIntent.FLAG_ONE_SHOT);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -37,7 +36,6 @@ public class AlarmBroadcast extends BroadcastReceiver {
         PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         contentView.setOnClickPendingIntent(R.id.flashButton, pendingSwitchIntent);
         contentView.setTextViewText(R.id.message, text);
-        //contentView.setTextViewText(R.id.message, desc);
         contentView.setTextViewText(R.id.date, date);
         mBuilder.setSmallIcon(R.drawable.ic_alarm);
         mBuilder.setAutoCancel(true);
@@ -58,8 +56,6 @@ public class AlarmBroadcast extends BroadcastReceiver {
 
         Notification notification = mBuilder.build();
         notificationManager.notify(1, notification);
-
-
     }
 }
 

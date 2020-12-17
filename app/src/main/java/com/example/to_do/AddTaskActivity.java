@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import java.text.ParseException;
 
 import androidx.annotation.Nullable;
@@ -36,7 +37,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener {
-
 
     Button btn_date, btn_time, btn_create;
     ImageView btn_speak;
@@ -69,10 +69,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         data = new Data();
         final String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Data").child(userUid);
-
-
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -93,17 +90,10 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent create = new Intent(AddTaskActivity.this, MainActivity.class);
         startActivity(create);
-
-        //data = new Data();
         data.setTitle(title.getText().toString());
         data.setDesc(desc.getText().toString());
         data.setSelectdate(btn_date.getText().toString());
         data.setSelecttime(btn_time.getText().toString());
-//        String tit = (title.getText().toString().trim());
-//        String des = (desc.getText().toString().trim());
-//        String date = (btn_date.getText().toString().trim());
-//        String time = (btn_time.getText().toString().trim());
-
 
         databaseReference.push().setValue(data);
 
@@ -117,28 +107,16 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         data.setTitle(value);
         data.setSelecttime(time);
 
-
         setAlarm(value, date, time);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setAlarm(String text, String date, String time) {
-
-
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-
-
         Intent intent = new Intent(getApplicationContext(), AlarmBroadcast.class);
         intent.putExtra("event", text);
         intent.putExtra("time", date);
         intent.putExtra("date", time);
-
-
-//        intent.putExtra("desc", des);
-//        intent.putExtra("date", date);
-//        intent.putExtra("time", time);
-
 
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -156,8 +134,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
-
     private void Speak() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -170,7 +146,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, "Your Device Doesn't Support Speech Input", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void selectTime() {
 
@@ -185,10 +160,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
             }
         }, hour, minute, false);
         timePickerDialog.show();
-
-
     }
-
 
     private void selectDate() {
         Calendar calendar = Calendar.getInstance();
@@ -229,10 +201,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
             time = temp + ":" + formattedMinute + " PM";
         }
 
-
         return time;
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -251,9 +221,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
-
-
-
 }
 
 

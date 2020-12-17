@@ -46,9 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
         RegEmail = findViewById(R.id.RegistrationEmail);
         RegPassword = findViewById(R.id.RegistrationPassword);
         RegButton = findViewById(R.id.RegistrationButton);
-        RegPageQuestion =findViewById(R.id.RegistrationPageQuestion);
+        RegPageQuestion = findViewById(R.id.RegistrationPageQuestion);
 
-        RegPageQuestion.setOnClickListener(new View.OnClickListener(){
+        RegPageQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -97,26 +97,28 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-                private void initializeTextToSpeech () {
-                    tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                        @Override
-                        public void onInit(int status) {
-                            if (tts.getEngines().size() == 0) {
-                                Toast.makeText(RegisterActivity.this, "Engine is not available", Toast.LENGTH_SHORT).show();
-                            } else {
-                                assistant(" Please Register with Email address and Password");
-                            }
-                        }
-                    });
-                }
-                private void assistant (String msg){
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
-                    } else {
-                        tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
-                    }
+    private void initializeTextToSpeech() {
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (tts.getEngines().size() == 0) {
+                    Toast.makeText(RegisterActivity.this, "Engine is not available", Toast.LENGTH_SHORT).show();
+                } else {
+                    assistant(" Please Register with Email address and Password");
                 }
+            }
+        });
+    }
+
+    private void assistant(String msg) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
 
 
 }

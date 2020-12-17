@@ -25,7 +25,6 @@ public class Data {
 
     public void setDesc(String desc) {
         Desc = desc;
-
     }
 
     public String getSelectdate() {
@@ -43,5 +42,4 @@ public class Data {
     public void setSelecttime(String selecttime) {
         Selecttime = selecttime;
     }
-
 }

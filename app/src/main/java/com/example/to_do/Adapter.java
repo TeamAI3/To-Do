@@ -19,7 +19,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public Adapter(Context context, ArrayList<Data> DataList) {
         this.DataList = DataList;
         this.context = context;
-
     }
 
     @NonNull
@@ -48,7 +47,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             title = itemView.findViewById(R.id.tasktitle);
             desc = itemView.findViewById(R.id.taskdesc);
             date = itemView.findViewById(R.id.taskdate);

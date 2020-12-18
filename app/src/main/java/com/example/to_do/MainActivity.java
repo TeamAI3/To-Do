@@ -2,12 +2,16 @@ package com.example.to_do;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.media.AudioManager;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onInit(int status) {
                 initializeSpeechRecognizer();
@@ -79,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(addtask);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initializeSpeechRecognizer() {
+        voiceAutomation();
         Intent voice = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         voice.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         voice.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -101,11 +108,22 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             } else {
                 Intent voice = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                voice.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                voice.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+                voice.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+                voice.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak again\nTry create task or Add task");
+                voice.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1500);
+                voice.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1500);
+                voice.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 15000);
+                tts.speak("Try create task or Add task", TextToSpeech.QUEUE_FLUSH, null);
+                do {
+                    continue;
+                } while (tts.isSpeaking());
+                tts.stop();
                 startActivityForResult(voice, 1);
             }
         }
     }
-
     @Override
     protected void onPause() {
         while (tts.isSpeaking()) {
@@ -118,5 +136,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         tts.shutdown();
         super.onDestroy();
+    }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void voiceAutomation() {
+        final int min = 1;
+        final int max = 4;
+
+        String help[] = {"Now tell me, How can I help you? ", "Now tell me, What can I do for you?"};
+        tts.setSpeechRate(0);
+        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setMicrophoneMute(true);
+        tts.speak(help[new Random().nextInt((2 - min) + 1) + min - 1], TextToSpeech.QUEUE_FLUSH, null);
+        do {
+            continue;
+        } while (tts.isSpeaking());
+        tts.stop();
+        /*try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } */
+        audioManager.setMicrophoneMute(false);
+
+
+
     }
 }

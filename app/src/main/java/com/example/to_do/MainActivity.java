@@ -1,23 +1,20 @@
 package com.example.to_do;
 
+import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.media.AudioManager;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeechService;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     list.add(data);
                 }
                 adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -77,12 +75,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     public void Task(View view) {
         Intent addtask = new Intent(MainActivity.this, AddTaskActivity.class);
         startActivity(addtask);
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initializeSpeechRecognizer() {

@@ -18,6 +18,8 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeechService;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private Adapter adapter;
     private ArrayList<Data> list;
     TextToSpeech tts;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,4 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }

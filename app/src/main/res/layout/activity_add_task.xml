@@ -4,6 +4,7 @@
     android:id="@+id/Description"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_design"
     android:orientation="vertical">
 
     <EditText
@@ -22,24 +23,23 @@
         android:id="@+id/desc"
         android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-
         android:layout_marginLeft="16dp"
         android:layout_marginTop="141dp"
         android:hint="Description "
+        android:inputType="textMultiLine"
         android:textSize="26sp"
         android:textStyle="normal" />
 
     <Button
+        android:id="@+id/btn_create"
         android:layout_width="316dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/btn_time"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-118dp"
         android:text="create"
-        android:id="@+id/btn_create"
         android:textSize="26sp"
         android:textStyle="normal" />
 
@@ -53,7 +53,6 @@
         android:gravity="center"
         android:src="@drawable/ic_mic" />
 
-
     <Button
         android:id="@+id/btn_date"
         android:layout_width="wrap_content"
@@ -66,9 +65,6 @@
         android:layout_marginBottom="435dp"
         android:text="DATE" />
 
-
-
-
     <Button
         android:id="@+id/btn_time"
         android:layout_width="wrap_content"
@@ -80,7 +76,5 @@
         android:layout_marginLeft="19dp"
         android:layout_marginBottom="366dp"
         android:text="TIME" />
-
-
 
 </RelativeLayout>

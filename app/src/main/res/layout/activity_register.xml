@@ -15,12 +15,12 @@
         android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_email_black_24dp"
         android:drawablePadding="10dp"
         android:hint="Enter Email.."
         android:inputType="textWebEmailAddress"
         android:padding="10dp"
-        android:textColor="#000"
-        android:drawableLeft="@drawable/ic_email_black_24dp" />
+        android:textColor="#000" />
 
     <EditText
         android:id="@+id/RegistrationPassword"
@@ -29,12 +29,12 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_lock_24"
         android:drawablePadding="10dp"
         android:hint="Enter password.."
         android:inputType="textPassword"
         android:padding="10dp"
-        android:textColor="#000"
-        android:drawableLeft="@drawable/ic_lock_24" />
+        android:textColor="#000" />
 
     <Button
         android:id="@+id/RegistrationButton"

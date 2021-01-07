@@ -17,6 +17,9 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeechService;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -137,6 +140,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         tts.shutdown();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.logout:
+
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this,WelcomeActivity.class));
+                break;
+
+
+        }
+        return true;
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void voiceAutomation() {

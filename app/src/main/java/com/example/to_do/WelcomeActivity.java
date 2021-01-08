@@ -14,7 +14,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private static final int SPLASH = 5000;
     Animation topAnim, bottomAnim;
     ImageView imageView;
-     TextView appName;
+    TextView appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-     bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
         imageView = findViewById(R.id.imageView);
         appName = findViewById(R.id.appName);
 
@@ -37,6 +37,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },SPLASH);
+        }, SPLASH);
     }
 }

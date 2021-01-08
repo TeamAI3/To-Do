@@ -99,6 +99,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Toast.makeText(getApplicationContext(), "Task created", Toast.LENGTH_SHORT).show();
 
+
         String value = (title.getText().toString().trim());
         String date = (btn_date.getText().toString().trim());
         String time = (btn_time.getText().toString().trim());

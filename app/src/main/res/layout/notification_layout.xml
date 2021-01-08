@@ -18,7 +18,7 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="Snozz off" />
+            android:text="Snooz off" />
 
         <ImageView
             android:id="@+id/icon"
@@ -28,8 +28,7 @@
             android:layout_marginLeft="-10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:src="@mipmap/ic_launcher" />
-
+            android:src="@drawable/todolist" />
 
         -
 
